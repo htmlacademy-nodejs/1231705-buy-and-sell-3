@@ -1,6 +1,6 @@
 'use strict';
 
-const {getRandomInt, shuffle} = require(`../../utils`);
+const {getRandomInt, shuffle, printNumWithLead0} = require(`../../utils`);
 const fs = require(`fs`);
 
 const DEFAULT_COUNT = 1;
@@ -47,11 +47,19 @@ const SumRestrict = {
   max: 100000,
 };
 
+const PictureRestrict = {
+  min: 1,
+  max: 16,
+};
+
+const getPictureFileName = (number) => `item${printNumWithLead0(number)}.jpg`;
+
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => ({
     category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
     description: shuffle(SENTENCES).slice(1, 5).join(` `),
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
+    picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
     type: Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)],
     sum: getRandomInt(SumRestrict.min, SumRestrict.max),
   }))

@@ -15,7 +15,10 @@ const shuffle = (someArray) => {
   return someArray;
 };
 
+const printNumWithLead0 = (number) => (number < 10) ? `0${number}` : number;
+
 module.exports = {
   getRandomInt,
-  shuffle
+  shuffle,
+  printNumWithLead0
 };

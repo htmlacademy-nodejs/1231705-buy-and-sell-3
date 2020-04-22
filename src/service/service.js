@@ -4,7 +4,8 @@ const {Cli} = require(`./cli`);
 const {
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
-  ExitCode
+  ExitCode,
+  MAX_COUNT
 } = require(`../constants`);
 
 const userArguments = process.argv.slice(USER_ARGV_INDEX);
@@ -15,4 +16,11 @@ if (userArguments.length === 0 || !Cli[userCommand]) {
   process.exit(ExitCode.success);
 }
 
-Cli[userCommand].run(userArguments.slice(1));
+const generateCount = userArguments.slice(1);
+
+if (generateCount < MAX_COUNT) {
+  Cli[userCommand].run(generateCount);
+} else {
+  console.error(`Не больше ${MAX_COUNT} объявлений`);
+  process.exit(ExitCode.error);
+}
