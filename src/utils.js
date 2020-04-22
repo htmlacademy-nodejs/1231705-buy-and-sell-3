@@ -1,3 +1,5 @@
+'use strict';
+
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -16,4 +18,4 @@ const shuffle = (someArray) => {
 module.exports = {
   getRandomInt,
   shuffle
-}
+};

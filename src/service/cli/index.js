@@ -8,7 +8,7 @@ const Cli = {
   [help.name]: help,
   [generate.name]: generate,
   [version.name]: version,
-}
+};
 
 module.exports = {
   Cli
