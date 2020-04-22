@@ -1,6 +1,7 @@
 `use strict`;
 
 const {getRandomInt, shuffle} = require('../../utils');
+const fs = require('fs');
 
 const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
@@ -46,9 +47,30 @@ const SumRestrict = {
   max: 100000,
 };
 
+const generateOffers = (count) => (
+  Array(count).fill({}).map(() => ({
+    category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
+    description: shuffle(SENTENCES).slice(1, 5).join(` `),
+    picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
+    title: TITLES[getRandomInt(0, TITLES.length - 1)],
+    type: Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)],
+    sum: getRandomInt(SumRestrict.min, SumRestrict.max),
+  }))
+);
+
 module.exports = {
   name: `--generate`,
-  run() {
+  run(args) {
+    const [count] = args;
+    const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
+    const content = JSON.stringify(generateOffers(countOffer));
 
+    fs.writeFile(FILE_NAME, content, error => {
+      if (error) {
+        return console.error(`Не смог записать в файл`)
+      }
+
+      return console.info(`Операция прошла успешна`);
+    })
   }
 };
