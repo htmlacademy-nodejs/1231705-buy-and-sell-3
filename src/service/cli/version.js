@@ -1,9 +1,11 @@
-const packageJsonFile = require('../../../package.json');
+'use strict';
+
+const packageJsonFile = require(`../../../package.json`);
 
 module.exports = {
-  name: '--version',
+  name: `--version`,
   run() {
     const version = packageJsonFile.version;
     console.info(version);
   }
-}
+};
